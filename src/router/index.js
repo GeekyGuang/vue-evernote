@@ -4,13 +4,14 @@ import Login from '@/components/Login'
 import NotebookList from '@/components/NotebookList'
 import Note from '@/components/NoteDetail'
 import Trash from '@/components/TrashDetail'
+import NotFound from '@/components/NotFound'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    component: Login
+    redirect: '/login'
   },
   {
     path: '/login',
@@ -26,7 +27,11 @@ const routes = [
   },
   {
     path: '/trash/:noteId',
-    components: Trash
+    component: Trash
+  },
+  {
+    path: '*',
+    component: NotFound
   }
 ]
 
