@@ -1,19 +1,15 @@
 <template>
   <div id="trash-detail">
-      <h1>{{msg}}:{{$route.params.noteId}}</h1>
+     回收站
   </div>
 </template>
 
-<script>
-export default {
-  components: {},
-  props: {},
-  data() {
-    return {
-        msg: "回收站笔记详情页"
-    };
-  },
-};
+<script lang="ts">
+import Vue from 'vue'
+import {Component} from 'vue-property-decorator'
+@Component
+export default class TrashDetail extends Vue{
+}
 </script>
 <style lang="scss" scoped>
 h1 {

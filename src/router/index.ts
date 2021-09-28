@@ -1,42 +1,42 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '@/components/Login'
-import NotebookList from '@/components/NotebookList'
-import NoteDetail from '@/components/NoteDetail'
-import TrashDetail from '@/components/TrashDetail'
-import NotFound from '@/components/NotFound'
+import Login from '@/components/Login.vue'
+import NotebookList from '@/components/NotebookList.vue'
+import NoteDetail from '@/components/NoteDetail.vue'
+import TrashDetail from '@/components/TrashDetail.vue'
+import NotFound from '@/components/NotFound.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: '/login'
+    redirect: '/login',
   },
   {
     path: '/login',
-    component: Login
+    component: Login,
   },
   {
     path: '/notebooks',
-    component: NotebookList
+    component: NotebookList,
   },
   {
     path: '/note/:noteId',
-    component: NoteDetail
+    component: NoteDetail,
   },
   {
     path: '/trash/:noteId',
-    component: TrashDetail
+    component: TrashDetail,
   },
   {
     path: '*',
-    component: NotFound
-  }
+    component: NotFound,
+  },
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
 })
 
 export default router

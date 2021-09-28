@@ -1,23 +1,16 @@
 <template>
   <div id="notebook-list">
-      <h1>{{msg}}</h1>
-      <ul>
-          <li><router-link to="/note/1">笔记本1</router-link></li>
-          <li><router-link to="/note/2">笔记本2</router-link></li>
-      </ul>
+    笔记列表
   </div>
 </template>
 
-<script>
-export default {
-  components: {},
-  props: {},
-  data() {
-    return {
-        msg: "笔记本列表"
-    };
-  },
-};
+<script lang="ts">
+import Vue from 'vue'
+import {Component} from 'vue-property-decorator'
+@Component
+export default class NotebookList extends Vue{
+
+}
 </script>
 <style lang="scss" scoped>
 h1 {

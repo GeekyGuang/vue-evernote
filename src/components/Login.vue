@@ -4,15 +4,13 @@
   </div>
 </template>
 
-<script>
-  export default {
-      name: 'Login',
-      data(){
-          return {
-              message: "hello"
-          }
-      }
-  }
+<script lang="ts">
+import Vue from 'vue'
+import {Component} from 'vue-property-decorator'
+@Component
+export default  class Login extends Vue{
+  message = '登录页'
+}
 </script>
 
 <style lang="scss" scoped>
