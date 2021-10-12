@@ -39,7 +39,7 @@ export default class Sidebar extends Vue{
       display: block;
     }
 
-    > router-link-active {
+    > .router-link-active {
       background: #5e6266;
     }
   }
