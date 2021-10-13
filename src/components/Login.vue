@@ -7,7 +7,8 @@
             <div class="form">
               <h3 @click="showRegister">创建账户</h3>
               <div v-show="isShowRegister" class="register">
-                <input type="text" placeholder="用户名">
+                {{register.username}}
+                <input type="text" :value="register.username" @input="register.username=$event.target.value" placeholder="用户名">
                 <input type="text" placeholder="密码">
                 <div class="button">创建账号</div>
               </div>
@@ -53,6 +54,7 @@ export default  class Login extends Vue{
     this.isShowRegister = false
     this.isShowLogin = true
   }
+
 }
 </script>
 
