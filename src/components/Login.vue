@@ -7,16 +7,17 @@
             <div class="form">
               <h3 @click="showRegister">创建账户</h3>
               <div v-show="isShowRegister" class="register">
-                {{register.username}}
                 <input type="text" :value="register.username" @input="register.username=$event.target.value" placeholder="用户名">
-                <input type="text" placeholder="密码">
-                <div class="button">创建账号</div>
+                <input type="password" v-model="register.password" placeholder="密码">
+                <p v-bind:class="{error: register.isError}">{{register.notice}}</p>
+                <div class="button" @click="onRegister">创建账号</div>
               </div>
               <h3 @click="showLogin">登录</h3>
               <div v-show="isShowLogin" class="login">
-                <input type="text" placeholder="输入用户名">
-                <input type="text" placeholder="密码">
-                <div class="button">登录</div>
+                <input type="text" v-model="login.username" placeholder="输入用户名">
+                <input type="password" v-model="login.password" placeholder="密码">
+                <p v-bind:class="{error: login.isError}">{{login.notice}}</p>
+                <div class="button" @click="onLogin">登录</div>
               </div>
             </div>
           </div>
@@ -53,6 +54,41 @@ export default  class Login extends Vue{
   showLogin() {
     this.isShowRegister = false
     this.isShowLogin = true
+  }
+
+  onRegister() {
+    if(!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.register.username)){
+      this.register.isError = true
+      this.register.notice = '用户名必须3~15个字符，仅限于字母数字下划线和中文'
+      return
+    }
+
+    if(!/^.{6,16}$/.test(this.register.password)){
+      this.register.isError = true
+      this.register.notice = "密码长度须6~16位"
+      return
+    }
+    this.register.isError = false
+    this.register.notice = ''
+    console.log(`start register..., username:${this.register.username}, password:${this.register.password}`)
+  }
+
+  onLogin() {
+    // 不需要这样验证，应与服务器匹配用户名是否存在和密码是否正确
+    if(!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)){
+      this.login.isError = true
+      this.login.notice = '用户名必须3~15个字符，仅限于字母数字下划线和中文'
+      return
+    }
+
+    if(!/^.{6,16}$/.test(this.login.password)){
+      this.login.isError = true
+      this.login.notice = "密码长度须6~16位"
+      return
+    }
+    this.login.isError = false
+    this.login.notice = ''
+    console.log(`start login..., username:${this.login.username}, password:${this.login.password}`)
   }
 
 }
