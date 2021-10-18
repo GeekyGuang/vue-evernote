@@ -34,6 +34,7 @@
 import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
 import auth from '@/apis/auth'
+import Bus from '@/helpers/bus'
 
 auth.get_info()
 .then(data => {
@@ -108,6 +109,7 @@ export default  class Login extends Vue{
           this.login.isError = false
           this.login.notice = ''
           this.$router.push({path: '/notebooks'})
+          Bus.$emit('login', {username: this.login.username})
           console.log('start redirect...')
         })
         .catch(data => {
