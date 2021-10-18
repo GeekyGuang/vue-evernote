@@ -6,7 +6,7 @@
     <router-link to="/notebooks" title="笔记本"><i class="iconfont icon-notebook"></i></router-link>
     <router-link to="/trash/2" title="回收站" ><i class="iconfont icon-trash"></i></router-link>
   </div>
-  <div class="logout">
+  <div class="logout" @click="onLogout">
     <i class="iconfont icon-logout"></i>
   </div>
   </div>
@@ -16,10 +16,14 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator';
 import Avatar from './Avatar.vue';
+import request from '@/helpers/request';
 
 @Component({components:{Avatar}})
 export default class Sidebar extends Vue{
-
+  onLogout(){
+    console.log('logout')
+    request('/auth/logout').then(data => console.log(data))
+  }
 }
 </script>
 
