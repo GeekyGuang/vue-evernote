@@ -21,8 +21,7 @@ import auth from '@/apis/auth'
 @Component({components:{Avatar}})
 export default class Sidebar extends Vue{
   onLogout(){
-    console.log('logout')
-    auth.logout().then(data => console.log(data))
+    auth.logout().then(() => this.$router.push({path: '/login'}))
   }
 }
 </script>

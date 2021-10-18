@@ -80,11 +80,12 @@ export default  class Login extends Vue{
       this.register.notice = "密码长度须6~16位"
       return
     }
-    this.register.isError = false
-    this.register.notice = ''
+
     auth.register({username: this.register.username, password: this.register.password})
-        .then(data => {
-          console.log(data)
+        .then(() => {
+          this.register.isError = false
+          this.register.notice = ''
+          this.$router.push({path: '/notebooks'})
         })
   }
 
@@ -101,11 +102,17 @@ export default  class Login extends Vue{
       this.login.notice = "密码长度须6~16位"
       return
     }
-    this.login.isError = false
-    this.login.notice = ''
-    auth.login({username: this.register.username, password: this.register.password})
-        .then(data => {
-          console.log(data)
+
+    auth.login({username: this.login.username, password: this.login.password})
+        .then(() => {
+          this.login.isError = false
+          this.login.notice = ''
+          this.$router.push({path: '/notebooks'})
+          console.log('start redirect...')
+        })
+        .catch(data => {
+          this.login.isError = true
+          this.login.notice = data.msg
         })
   }
 
