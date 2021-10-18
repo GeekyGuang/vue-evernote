@@ -16,13 +16,13 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator';
 import Avatar from './Avatar.vue';
-import request from '@/helpers/request';
+import auth from '@/apis/auth'
 
 @Component({components:{Avatar}})
 export default class Sidebar extends Vue{
   onLogout(){
     console.log('logout')
-    request('/auth/logout').then(data => console.log(data))
+    auth.logout().then(data => console.log(data))
   }
 }
 </script>

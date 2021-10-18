@@ -33,9 +33,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component} from 'vue-property-decorator'
+import auth from '@/apis/auth'
 
-import request from '@/helpers/request';
-request('auth')
+auth.get_info()
 .then(data => {
   console.log(data)
 })
@@ -82,8 +82,7 @@ export default  class Login extends Vue{
     }
     this.register.isError = false
     this.register.notice = ''
-
-    request('auth/register', 'POST', {username: this.register.username, password: this.register.password})
+    auth.register({username: this.register.username, password: this.register.password})
         .then(data => {
           console.log(data)
         })
@@ -104,7 +103,7 @@ export default  class Login extends Vue{
     }
     this.login.isError = false
     this.login.notice = ''
-    request('auth/login', 'POST', {username: this.login.username, password: this.login.password})
+    auth.login({username: this.register.username, password: this.register.password})
         .then(data => {
           console.log(data)
         })

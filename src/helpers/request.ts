@@ -19,7 +19,7 @@ export default function request(url: string, type='GET', data={}){
     } else {
       option.data = data
     }
-    axios(option).then((res: { status: number; data: unknown }) => {
+    axios(option).then((res: { status: number; data: any }) => {
       if(res.status === 200) {
         resolve(res.data)
       } else {
