@@ -1,6 +1,24 @@
 <template>
-  <div id="notebook-list">
-    笔记列表
+  <div class="detail" id="notebook-list">
+    <header>
+      <a href="#" class="btn" @click.prevent="onCreate"><i class="iconfont icon-plus"></i> 新建笔记本</a>
+    </header>
+    <main>
+      <div class="layout">
+        <h3>笔记本列表({{notebooks.length}})</h3>
+        <div class="book-list">
+          <router-link v-for="notebook in notebooks" to="/note/1" class="notebook" :key="notebook.id">
+            <div>
+              <span class="iconfont icon-notebook"></span> {{notebook.title}}
+              <span>{{notebook.noteCounts}}</span>
+              <span class="action" @click.stop.prevent="onEdit(notebook)">编辑</span>
+              <span class="action" @click.stop.prevent="onDelete(notebook)">删除</span>
+              <span class="date">{{notebook.friendlyCreatedAt}}</span>
+            </div>
+          </router-link>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -12,8 +30,8 @@ import {Component} from 'vue-property-decorator'
 @Component
 export default class NotebookList extends Vue{
   created(){
-    Auth.get_info().then(res =>{
-      if(!res.isLogin){
+    Auth.get_info().then((res: any) =>{
+      if(!(res.isLogin)){
         this.$router.push('/login')
       }
     }
@@ -22,7 +40,5 @@ export default class NotebookList extends Vue{
 }
 </script>
 <style lang="scss" scoped>
-h1 {
-    color: red;
-}
+@import url('~@/assets/css/notebookList.scss');
 </style>

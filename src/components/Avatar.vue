@@ -12,7 +12,7 @@ import Bus from '@/helpers/bus'
 export default class Avatar extends Vue{
     username = '未登录'
     created(){
-      Bus.$on('login', data => this.username = data.username)
+      Bus.$on('login', (data:{username: string}) => this.username = data.username)
       Auth.get_info().then((res: any) => {
         if(res.isLogin) {
           this.username = res.data.username
