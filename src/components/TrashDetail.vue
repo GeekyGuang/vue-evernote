@@ -11,7 +11,7 @@ import Auth from '@/apis/auth';
 @Component
 export default class TrashDetail extends Vue{
   created() {
-    Auth.get_info().then(res => {
+    Auth.get_info().then((res:any) => {
           if (!res.isLogin) {
             this.$router.push('/login')
           }

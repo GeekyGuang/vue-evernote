@@ -26,9 +26,13 @@
 import Vue from 'vue'
 import Auth from '@/apis/auth'
 import {Component} from 'vue-property-decorator'
+import Notebooks from '@/apis/notebook';
+
 
 @Component
 export default class NotebookList extends Vue{
+  notebooks = []
+
   created(){
     Auth.get_info().then((res: any) =>{
       if(!(res.isLogin)){
@@ -36,6 +40,9 @@ export default class NotebookList extends Vue{
       }
     }
     )
+
+    Notebooks.getAll().then(res => this.notebooks = res.data)
+    console.log(this.notebooks)
   }
 }
 </script>
