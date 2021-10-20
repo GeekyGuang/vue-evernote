@@ -28,10 +28,19 @@ import Auth from '@/apis/auth'
 import {Component} from 'vue-property-decorator'
 import Notebooks from '@/apis/notebook';
 
+interface Notebook {
+  createdAt: string
+  id: number
+  noteCounts: number
+  title: string
+  updatedAt: string
+  userId: number
+  friendlyCreatedAt?: string
+}
 
 @Component
 export default class NotebookList extends Vue{
-  notebooks = []
+  notebooks: Notebook[] = []
 
   created(){
     Auth.get_info().then((res: any) =>{
@@ -41,11 +50,49 @@ export default class NotebookList extends Vue{
     }
     )
 
-    Notebooks.getAll().then(res => this.notebooks = res.data)
+    Notebooks.getAll().then((res:any) => this.notebooks = res.data)
     console.log(this.notebooks)
+  }
+
+  onCreate() {
+    const title = window.prompt('创建笔记本')
+    if(title !== null && title.trim() === ''){
+      window.alert('笔记本名不可为空')
+    }
+    if(title !== null && title.trim() !== ''){
+      Notebooks.addNotebook({title}).then((res: any) => {
+        window.alert(res.msg)
+        this.notebooks.unshift(res.data)
+      }).catch(err => window.alert(err.msg))
+    }
+  }
+
+  onEdit(notebook: Notebook) {
+    const title = window.prompt('修改笔记本', notebook.title)
+    if(title !== null && title.trim() === ''){
+      window.alert('笔记本名不可为空')
+    }
+    if(title !== null && title.trim() !== ''){
+      Notebooks.updateNotebook(notebook.id,{title}).then((res: any) => {
+        window.alert(res.msg)
+        notebook.title = title
+      }).catch(err => window.alert(err.msg))
+    }
+  }
+
+  onDelete(notebook: Notebook) {
+    const isConfirm = window.confirm('确定要删除吗？')
+    if(isConfirm){
+      Notebooks.delete(notebook.id)
+      .then((res: any) =>{
+        window.alert(res.msg)
+        this.notebooks.splice(this.notebooks.indexOf(notebook), 1)
+      }
+      ).catch(err => window.alert(err.msg))
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
-@import url('~@/assets/css/notebookList.scss');
+@import '~@/assets/css/notebook-list.scss';
 </style>

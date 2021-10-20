@@ -12,12 +12,12 @@ export default {
     return request(URL.GET, 'GET')
   },
   addNotebook({title=''} = {title: ''}){
-    return request(URL.ADD, 'POST', 'title')
+    return request(URL.ADD, 'POST', {title})
   },
-  updateNotebook(id: string, {title=''} = {title: ''}){
-    return request(URL.UPDATE.replace(':id', id), 'PATCH', {title} )
+  updateNotebook(id: number, {title=''} = {title: ''}){
+    return request(URL.UPDATE.replace(':id', id.toString()), 'PATCH', {title} )
   },
-  delete(id: string){
-    return request(URL.DELETE.replace(':id', id))
+  delete(id: number){
+    return request(URL.DELETE.replace(':id', id.toString()), 'DELETE')
   }
 }
