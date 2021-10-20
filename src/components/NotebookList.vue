@@ -27,16 +27,9 @@ import Vue from 'vue'
 import Auth from '@/apis/auth'
 import {Component} from 'vue-property-decorator'
 import Notebooks from '@/apis/notebook';
+import {Notebook} from '@/custom';
+import {friendlyDate} from '@/helpers/util';
 
-interface Notebook {
-  createdAt: string
-  id: number
-  noteCounts: number
-  title: string
-  updatedAt: string
-  userId: number
-  friendlyCreatedAt?: string
-}
 
 @Component
 export default class NotebookList extends Vue{
@@ -62,6 +55,7 @@ export default class NotebookList extends Vue{
     if(title !== null && title.trim() !== ''){
       Notebooks.addNotebook({title}).then((res: any) => {
         window.alert(res.msg)
+        res.data.friendlyCreatedAt = friendlyDate(res.data.createdAt)
         this.notebooks.unshift(res.data)
       }).catch(err => window.alert(err.msg))
     }
