@@ -48,42 +48,50 @@ export default class NotebookList extends Vue{
   }
 
   onCreate() {
-    const title = window.prompt('创建笔记本')
-    if(title !== null && title.trim() === ''){
-      window.alert('笔记本名不可为空')
-    }
-    if(title !== null && title.trim() !== ''){
-      Notebooks.addNotebook({title}).then((res: any) => {
-        window.alert(res.msg)
-        res.data.friendlyCreatedAt = friendlyDate(res.data.createdAt)
-        this.notebooks.unshift(res.data)
-      }).catch(err => window.alert(err.msg))
-    }
+    this.$prompt('请输入笔记本标题', '新建笔记本', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      inputPattern: /^.{1,30}$/,
+      inputErrorMessage: '标题不能为空，且不超过30个字符'
+    }).then((obj: any ) => {
+      const {value} = obj
+      return Notebooks.addNotebook({title: value})
+    }).then((res: any) => {
+      this.$message.success(res.msg)
+      res.data.friendlyCreatedAt = friendlyDate(res.data.createdAt)
+      this.notebooks.unshift(res.data)
+    })
   }
 
   onEdit(notebook: Notebook) {
-    const title = window.prompt('修改笔记本', notebook.title)
-    if(title !== null && title.trim() === ''){
-      window.alert('笔记本名不可为空')
-    }
-    if(title !== null && title.trim() !== ''){
-      Notebooks.updateNotebook(notebook.id,{title}).then((res: any) => {
-        window.alert(res.msg)
-        notebook.title = title
-      }).catch(err => window.alert(err.msg))
-    }
+    let title = ''
+    this.$prompt('请输入笔记本标题', '修改笔记本', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      inputPattern: /^.{1,30}$/,
+      inputErrorMessage: '标题不能为空，且不超过30个字符',
+      inputValue: notebook.title
+    }).then((obj: any ) => {
+      title = obj.value
+      return Notebooks.updateNotebook(notebook.id,{title})
+    }).then((res: any) => {
+      notebook.title = title
+      this.$message.success(res.msg)
+    })
   }
 
   onDelete(notebook: Notebook) {
-    const isConfirm = window.confirm('确定要删除吗？')
-    if(isConfirm){
-      Notebooks.delete(notebook.id)
-      .then((res: any) =>{
-        window.alert(res.msg)
-        this.notebooks.splice(this.notebooks.indexOf(notebook), 1)
-      }
-      ).catch(err => window.alert(err.msg))
-    }
+    this.$confirm('确定要删除吗？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(()=>{
+      return  Notebooks.delete(notebook.id)
+    }).then((res:any) => {
+      this.$message.success(res.msg);
+      this.notebooks.splice(this.notebooks.indexOf(notebook), 1)
+    })
+
   }
 }
 </script>
