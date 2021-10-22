@@ -1,5 +1,6 @@
 // @ts-ignore
 import axios,{ AxiosError }  from 'axios'
+import { Message } from 'element-ui'
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.baseURL = 'https://note-server.hunger-valley.com'
@@ -23,11 +24,11 @@ export default function request(url: string, type='GET', data={}){
       if(res.status === 200) {
         resolve(res.data)
       } else {
-        console.error(res.data)
+        Message.error(res.data)
         reject(res.data)
       }
     }).catch((e: AxiosError)  => {
-      console.error({msg: '网络异常'})
+      Message.error(e.message)
       reject({msg: '网络异常'})
     })
   })
