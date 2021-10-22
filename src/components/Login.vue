@@ -18,7 +18,7 @@
               <transition name="slide">
                 <div :class="{show: isShowLogin}" class="login">
                   <input type="text" v-model="login.username" placeholder="输入用户名">
-                  <input type="password" v-model="login.password" placeholder="密码">
+                  <input type="password" v-model="login.password" placeholder="密码" @keyup.enter="onLogin">
                   <p v-bind:class="{error: login.isError}">{{login.notice}}</p>
                   <div class="button" @click="onLogin">登录</div>
                 </div>
