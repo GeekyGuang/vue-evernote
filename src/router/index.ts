@@ -5,6 +5,7 @@ import NotebookList from '@/components/NotebookList.vue'
 import NoteDetail from '@/components/NoteDetail.vue'
 import TrashDetail from '@/components/TrashDetail.vue'
 import NotFound from '@/components/NotFound.vue'
+import NoteSideBar from '@/components/NoteSideBar.vue';
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,10 @@ const routes = [
   {
     path: '/trash',
     component: TrashDetail,
+  },
+  {
+    path: '/notesidebar',
+    component: NoteSideBar
   },
   {
     path: '*',
